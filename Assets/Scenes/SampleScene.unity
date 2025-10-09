@@ -358,8 +358,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_player: {fileID: 1237123938}
   m_distanceDetection: 5
-  m_gravity: 0.001
-  m_mass: 0
+  m_gravity: {x: 0, y: 0, z: 0}
+  m_mass: 5
   m_detected: 0
 --- !u!1 &619394800
 GameObject:
@@ -581,8 +581,8 @@ MonoBehaviour:
   m_mass: 1
   m_speed: 2
   m_canMove: 1
-  m_force: 0
   m_currentPlanet: {fileID: 0}
+  m_gravityForce: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
