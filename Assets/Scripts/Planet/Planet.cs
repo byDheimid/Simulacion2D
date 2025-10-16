@@ -4,23 +4,21 @@ using UnityEngine;
 public class Planet : MonoBehaviour
 {
     public NaveEspacial m_player;
-    public float m_distanceDetection;
+    public float m_distanceDetection, m_mass;
     public Vector3 m_gravity;
-
-    public float m_mass;
     public bool m_detected;
 
     void Update()
     {
         Vector3 direction = transform.position - m_player.transform.position; // Se usará luego.
-        float ditance = direction.magnitude;
+        float distance = direction.magnitude;
 
-        if (ditance < m_distanceDetection)
+        if (distance < m_distanceDetection)
         {
             if (!m_detected)
             {
                 Debug.Log("Planeta actual es " + this.gameObject.name);
-                m_player.m_currentPlanet = this;
+                m_player.AddPlanet(this);
                 m_detected = true;
             }
 
@@ -30,7 +28,7 @@ public class Planet : MonoBehaviour
             if (m_detected)
             {
                 Debug.Log("ya no hay planeta");
-                m_player.m_currentPlanet = null;
+                m_player.RemovePlanet(this);
                 m_detected = false;
             }
 
