@@ -8,11 +8,12 @@ public class Bola : MonoBehaviour
 
     SpriteRenderer m_sp;
     Vector2 m_velocity;
+    
     void Awake()
     {
         TryGetComponent(out m_sp);
         m_velocity = initialSpeed * Vector2.down;
-    } 
+    }
 
     void Update()
     {
