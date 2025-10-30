@@ -7,6 +7,7 @@ public class Bow : MonoBehaviour
     public Parable m_parable;
     public Flotability m_flotability;
     public GameObject m_prefab;
+    public float m_maxForce;
 
     private BowArrow m_bowArrow;
 
@@ -21,12 +22,14 @@ public class Bow : MonoBehaviour
 
     void Initialize()
     {
-        Instantiate(m_prefab, transform).TryGetComponent(out m_bowArrow);
+        Instantiate(m_prefab, null).TryGetComponent(out m_bowArrow);
 
         m_arrows.Where(c => c.gameObject != null).ToList().ForEach(c => Destroy(c.gameObject));
         m_arrows.Clear();
 
         m_arrows.Add(m_bowArrow);
+
+        m_bowArrow.m_maxForce = m_maxForce;
 
         //-> PARABLE
         m_bowArrow.m_parable = m_parable;

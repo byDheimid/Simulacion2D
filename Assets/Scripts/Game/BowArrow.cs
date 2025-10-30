@@ -1,12 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BowArrow : MonoBehaviour
 {
+    public float m_speed;
     public float m_mass = 3;
     public CustomCollider m_collider;
-    public float m_maxForce;
+    [HideInInspector] public float m_maxForce;
     [HideInInspector] public Parable m_parable;
     [HideInInspector] public Flotability m_flotability;
     [HideInInspector] public Vector3 m_initialPosition;
@@ -15,7 +17,7 @@ public class BowArrow : MonoBehaviour
     private bool m_inWater;
 
     private Vector2 startPos;
-    private Vector2 velocity;
+    private Vector3 velocity;
     private Vector2 gravity;
 
     private float time;
@@ -53,7 +55,7 @@ public class BowArrow : MonoBehaviour
 
     void UpdateParabolicMovement()
     {
-        time += Time.deltaTime;
+        time += Time.deltaTime * m_speed;
         Vector2 newPos = m_parable.GetRoutePosition(startPos, velocity, gravity, time);
         Vector2 newVel = m_parable.GetCurrentVelocity(velocity, gravity, time);
 
@@ -75,7 +77,7 @@ public class BowArrow : MonoBehaviour
         Bounds arrowBounds = m_collider.m_renderer.bounds;
         Bounds waterBounds = m_flotability.m_water.GetComponent<SpriteRenderer>().bounds;
 
-        transform.position += m_flotability.GetRoutePosition(arrowBounds, waterBounds, m_mass);
+        transform.position += m_flotability.GetRoutePosition(arrowBounds, waterBounds, m_mass) * m_speed;
         transform.up = m_flotability.GetCurrentVelocity();
     }
 }
