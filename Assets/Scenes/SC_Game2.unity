@@ -3766,6 +3766,7 @@ MonoBehaviour:
   temperaturaMax: 50
   texto: {fileID: 1020179971}
   image: {fileID: 41711999}
+  sceneManager: {fileID: 2130826441}
 --- !u!1 &1716416597
 GameObject:
   m_ObjectHideFlags: 0

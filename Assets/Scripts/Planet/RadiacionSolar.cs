@@ -14,6 +14,7 @@ public class RadiacionSolar : MonoBehaviour
     public float temperaturaMax = 500f;  // Límite superior
     public TextMeshProUGUI texto;
     public Image image;
+    public SceneManager sceneManager;
 
     private void Start()
     {
@@ -28,6 +29,10 @@ public class RadiacionSolar : MonoBehaviour
         if (temperatura > 35)
         {
             image.color = Color.red;
+        }
+        if (temperatura >= 50)
+        {
+            sceneManager.LoadScene(name);
         }
 
         float distancia = Vector3.Distance(transform.position, sol.position);
@@ -48,7 +53,5 @@ public class RadiacionSolar : MonoBehaviour
 
         // Limitar la temperatura a un rango
         temperatura = Mathf.Clamp(temperatura, temperaturaMin, temperaturaMax);
-
-        Debug.Log("Temperatura actual: " + temperatura);
     }
 }
