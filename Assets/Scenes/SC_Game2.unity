@@ -1040,6 +1040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 666078293}
   - component: {fileID: 666078294}
+  - component: {fileID: 666078295}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -1117,6 +1118,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &666078295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666078292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b853a14be76e27746bce6169e3163ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1510119372}
+  intensidadSolar: 100
+  temperatura: 15
+  factorAbsorcion: 10
+  tasaEnfriamiento: 0.8
+  radioInfluencia: 20.5
+  temperaturaMin: 0
+  temperaturaMax: 50
+  texto: {fileID: 1020179971}
+  image: {fileID: 41711999}
+  sceneManager: {fileID: 2130826441}
 --- !u!1 &777673389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1286,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: SC_Game3
+          m_StringArgument: SC_End
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &934908973
@@ -3561,7 +3585,6 @@ GameObject:
   - component: {fileID: 1510119377}
   - component: {fileID: 1510119378}
   - component: {fileID: 1510119379}
-  - component: {fileID: 1510119380}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3745,28 +3768,6 @@ MonoBehaviour:
   m_planets: []
   m_gravityForce: {x: 0, y: 0, z: 0}
   m_velocity: {x: 0, y: 0, z: 0}
---- !u!114 &1510119380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510119371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b853a14be76e27746bce6169e3163ffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sol: {fileID: 666078293}
-  intensidadSolar: 100
-  temperatura: 15
-  factorAbsorcion: 1.2
-  tasaEnfriamiento: 0.8
-  temperaturaMin: 0
-  temperaturaMax: 50
-  texto: {fileID: 1020179971}
-  image: {fileID: 41711999}
-  sceneManager: {fileID: 2130826441}
 --- !u!1 &1716416597
 GameObject:
   m_ObjectHideFlags: 0

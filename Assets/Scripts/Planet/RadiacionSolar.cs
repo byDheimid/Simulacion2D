@@ -1,17 +1,17 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class RadiacionSolar : MonoBehaviour
 {
-    public Transform sol;                // Referencia al Sol
-    public float intensidadSolar = 100f; // Fuerza de la radiación
+    public Transform player;             // Referencia al player
+    public float intensidadSolar = 100f; // Fuerza de la radiaciÃ³n
     public float temperatura = 20f;      // Temperatura inicial (ej: temperatura normal)
-    public float factorAbsorcion = 1f;   // Qué tanto absorbe el objeto
-    public float tasaEnfriamiento = 5f;  // Qué tan rápido se enfría lejos del sol
-    public float temperaturaMin = -50f;  // Límite inferior
-    public float temperaturaMax = 500f;  // Límite superior
+    public float factorAbsorcion = 1f;   // QuÃ© tanto absorbe el objeto
+    public float tasaEnfriamiento = 5f;  // QuÃ© tan rÃ¡pido se enfrÃ­a lejos del sol
+    public float radioInfluencia = 10f;  // Radio mÃ¡ximo de influencia de la radiaciÃ³n solar
+    public float temperaturaMin = -50f;  // Lï¿½mite inferior
+    public float temperaturaMax = 500f;  // Lï¿½mite superior
     public TextMeshProUGUI texto;
     public Image image;
     public SceneManager sceneManager;
@@ -20,9 +20,15 @@ public class RadiacionSolar : MonoBehaviour
     {
         
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1f, 1f, 0f, 0.2f); // Amarillo semitransparente
+        Gizmos.DrawWireSphere(transform.position, radioInfluencia);
+    }
     void Update()
     {
-        texto.text = temperatura.ToString("F1") + "°";
+        texto.text = temperatura.ToString("F1") + "ï¿½";
 
         image.fillAmount = temperatura / 50;
 
@@ -32,22 +38,26 @@ public class RadiacionSolar : MonoBehaviour
         }
         if (temperatura >= 50)
         {
-            sceneManager.LoadScene(name);
+            sceneManager.LoadScene("SC_Game2");
         }
 
-        float distancia = Vector3.Distance(transform.position, sol.position);
+        float distancia = Vector3.Distance(player.position, transform.position);
 
-        // Radiación solar según distancia
-        float energiaRecibida = intensidadSolar / (distancia * distancia);
-
-        if (energiaRecibida > 0.1f) // Si la energía recibida es significativa
+        // Verifica si estamos dentro del radio de influencia
+        if (distancia <= radioInfluencia)
         {
-            // Calentamiento
-            temperatura += energiaRecibida * factorAbsorcion * Time.deltaTime;
+            // RadiaciÃ³n solar segÃºn distancia (ley del cuadrado inverso)
+            float energiaRecibida = intensidadSolar / (distancia * distancia);
+            
+            // Factor de atenuaciÃ³n basado en la distancia (1 en el centro, 0 en el borde)
+            float factorDistancia = 1f - (distancia / radioInfluencia);
+            
+            // Calentamiento con atenuaciÃ³n por distancia
+            temperatura += energiaRecibida * factorAbsorcion * factorDistancia * Time.deltaTime;
         }
         else
         {
-            // Enfriamiento natural
+            // Enfriamiento natural fuera del radio de influencia
             temperatura -= tasaEnfriamiento * Time.deltaTime;
         }
 
