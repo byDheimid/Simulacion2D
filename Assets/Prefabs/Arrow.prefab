@@ -206,6 +206,7 @@ MonoBehaviour:
   m_speed: 1.5
   m_mass: 3
   m_collider: {fileID: 7433693882845729888}
+  m_canRebote: 1
   m_maxForce: 6
   m_parable: {fileID: 0}
   m_flotability: {fileID: 0}
