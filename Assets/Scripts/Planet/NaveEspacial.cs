@@ -19,12 +19,20 @@ public class NaveEspacial : MonoBehaviour
     void Gravity()
     {
         m_gravityForce = Vector2.zero;
-        m_planets?.ForEach(c => m_gravityForce += c.GetGravityForce());
+        m_planets?.ForEach(p => m_gravityForce += p.GetGravityForce(this));
     }
 
-    public void AddPlanet(Planet planet) => m_planets.Add(!m_planets.Contains(planet) ? planet : null);
-    public void RemovePlanet(Planet planet) => m_planets.Remove(m_planets.Contains(planet) ? planet : null);
+    public void AddPlanet(Planet planet)
+    {
+        if (!m_planets.Contains(planet))
+            m_planets.Add(planet);
+    }
 
+    public void RemovePlanet(Planet planet)
+    {
+        if (m_planets.Contains(planet))
+            m_planets.Remove(planet);
+    }
     void Move()
     {
         m_velocity += m_gravityForce * Time.deltaTime;

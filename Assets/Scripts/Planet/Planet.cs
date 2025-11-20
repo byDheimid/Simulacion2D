@@ -1,44 +1,47 @@
-using UnityEditor.ShaderGraph;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Planet : MonoBehaviour
 {
-    public NaveEspacial m_player;
     public float m_distanceDetection, m_mass;
-    public Vector3 m_gravity;
-    public bool m_detected;
+
+    private List<NaveEspacial> m_detectedShips = new();
+    private NaveEspacial[] m_allShips;
+
+    void Start()
+    {
+        // Obtener todas las naves espaciales presentes en la escena
+        m_allShips = FindObjectsOfType<NaveEspacial>();
+    }
 
     void Update()
     {
-        Vector3 direction = transform.position - m_player.transform.position; // Se usará luego.
-        float distance = direction.magnitude;
-
-        if (distance < m_distanceDetection)
+        foreach (var ship in m_allShips)
         {
-            if (!m_detected)
-            {
-                Debug.Log("Planeta actual es " + this.gameObject.name);
-                m_player.AddPlanet(this);
-                m_detected = true;
-            }
+            float distance = Vector3.Distance(transform.position, ship.transform.position);
 
-        }
-        else
-        {
-            if (m_detected)
-            {
-                Debug.Log("ya no hay planeta");
-                m_player.RemovePlanet(this);
-                m_detected = false;
-            }
+            bool isInside = distance < m_distanceDetection;
+            bool wasInside = m_detectedShips.Contains(ship);
 
+            if (isInside && !wasInside)
+            {
+                Debug.Log("Planeta detectó a " + ship.name);
+                m_detectedShips.Add(ship);
+                ship.AddPlanet(this);
+            }
+            else if (!isInside && wasInside)
+            {
+                Debug.Log("Nave salió del planeta: " + ship.name);
+                m_detectedShips.Remove(ship);
+                ship.RemovePlanet(this);
+            }
         }
     }
 
-    public Vector3 GetGravityForce()
+    public Vector3 GetGravityForce(NaveEspacial ship)
     {
-        Vector3 direction = transform.position - m_player.transform.position; // Se usará luego.
-        float gravityForce = 1 * m_mass * m_player.m_mass / (direction.magnitude * direction.magnitude);
+        Vector3 direction = transform.position - ship.transform.position;
+        float gravityForce = 1 * m_mass * ship.m_mass / (direction.sqrMagnitude);
         return direction.normalized * gravityForce;
     }
 

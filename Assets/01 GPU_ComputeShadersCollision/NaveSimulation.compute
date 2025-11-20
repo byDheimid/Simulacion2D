@@ -1,0 +1,57 @@
+#pragma kernel CSMain
+
+struct Ship
+{
+    float2 position;
+    float2 velocity;
+    float  mass;
+};
+
+struct Planet
+{
+    float2 position;
+    float  mass;
+    float  detectionRadius; // No usado aquí, pero útil si luego quieres limitar distancia
+};
+
+RWStructuredBuffer<Ship> _Ships;
+StructuredBuffer<Planet> _Planets;
+
+cbuffer Params
+{
+    float _DeltaTime;
+    uint  _ShipCount;
+    uint  _PlanetCount;
+    float _GravityConstant;
+};
+
+[numthreads(64,1,1)]
+void CSMain(uint id : SV_DispatchThreadID)
+{
+    if (id >= _ShipCount)
+        return;
+
+    Ship ship = _Ships[id];
+    float2 totalForce = float2(0,0);
+
+    // --- Calcular gravedad de todos los planetas ---
+    for(uint i = 0; i < _PlanetCount; i++)
+    {
+        Planet p = _Planets[i];
+
+        float2 dir = p.position - ship.position;
+        float distSq = dot(dir, dir);
+
+        if (distSq < 0.01f)
+            continue; // Evitar división por 0
+
+        float forceMag = (_GravityConstant * ship.mass * p.mass) / distSq;
+        totalForce += normalize(dir) * forceMag;
+    }
+
+    // --- Integración física ---
+    ship.velocity += totalForce * _DeltaTime;
+    ship.position += ship.velocity * _DeltaTime;
+
+    _Ships[id] = ship;
+}
