@@ -1,0 +1,40 @@
+#pragma kernel CSMain
+
+struct FireParticle
+{
+    float2 startPos;
+    float amplitudeX;
+    float amplitudeY;
+    float frequencyX;
+    float frequencyY;
+    float offsetX;
+    float offsetY;
+};
+
+RWStructuredBuffer<float4> positions;      // Salida: posición final (x,y)
+StructuredBuffer<FireParticle> particles;  // Entrada: datos iniciales
+
+float _Time;
+float _Speed;
+float2 _ParentScale;
+
+[numthreads(256,1,1)]
+void CSMain (uint id : SV_DispatchThreadID)
+{
+    float2 startPos = particles[id].startPos;
+
+    float ax = particles[id].amplitudeX;
+    float ay = particles[id].amplitudeY;
+
+    float fx = particles[id].frequencyX;
+    float fy = particles[id].frequencyY;
+
+    float ox = particles[id].offsetX;
+    float oy = particles[id].offsetY;
+
+    float x = sin(_Time * fx + ox) * ax * _Speed;
+    float y = cos(_Time * fy + oy) * ay * _Speed;
+
+    float2 scaledStart = startPos * _ParentScale;
+    positions[id] = float4(scaledStart + float2(x, y), 0, 0);
+}

@@ -11,6 +11,7 @@ TagManager:
   - Ball
   - Nave
   - Planeta
+  - Fire
   layers:
   - Default
   - TransparentFX

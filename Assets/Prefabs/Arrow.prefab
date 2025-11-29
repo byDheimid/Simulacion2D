@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4779134626525920813}
   - component: {fileID: 6936105690165253046}
-  - component: {fileID: 7433693882845729888}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Arrow
@@ -88,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7433693882845729888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5612564013201393304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ea26ee0416b1ff4db38de6643cf6851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_renderer: {fileID: 6936105690165253046}
-  m_isCircle: 1
 --- !u!1 &9032168307881530185
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,9 +98,11 @@ GameObject:
   - component: {fileID: 1535450126840931153}
   - component: {fileID: 7847290945716674759}
   - component: {fileID: -4951972601312034533}
+  - component: {fileID: 790582324514843068}
+  - component: {fileID: 7477167586021038109}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,9 +192,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 1.5
   m_mass: 3
-  m_collider: {fileID: 7433693882845729888}
-  m_canRebote: 1
+  m_collider: {fileID: 790582324514843068}
   m_maxForce: 6
   m_parable: {fileID: 0}
   m_flotability: {fileID: 0}
   m_initialPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &790582324514843068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032168307881530185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490ba8a65cf898341a6658ecc9d6d130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  circleOverride:
+    kind: 0
+    center: {x: 0, y: 0}
+    radius: 0
+  triangleShape:
+    kind: 0
+    A: {x: -0.5, y: -0.3}
+    B: {x: -1, y: -1}
+    C: {x: 1, y: -1}
+  m_isTrigger: 1
+--- !u!114 &7477167586021038109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9032168307881530185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a0e204a65fa1894cb2a184ed3ef32f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0}
+  m_canRebote: 0
